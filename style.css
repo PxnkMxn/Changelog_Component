@@ -1,0 +1,172 @@
+/* ====================
+    Reset & Base
+==================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;    
+    display: flex;
+    justify-content: center; /* จัด Component ให้อยู่กลางจอสำหรับดูตัวอย่าง */
+}
+
+/* ================
+    2. Container
+================= */
+.changelog-container {
+    width: 100%;
+    max-width: 700px;
+    border: 1.5px solid #222; /* เส้นขอบสีดำ */
+    border-radius: 24px; /* ขอบมน */
+    padding: 60px 40px;
+}
+
+/* =================
+    3. Header
+================= */
+.changelog-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.changelog-header h1 {
+    font-size: 2.2rem;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.changelog-header p {
+    color: #999;
+    font-size: 1rem;
+}
+
+/* =====================================
+    4.Timeline (เกี่ยวกับเรื่อง Positioning)
+===================================== */
+.timeline {
+    position: relative; /* กำหนดกล่องนี้ให้เป็นพิกัดอ้างอิงให้เส้นตรง*/
+    padding: 20px 0;
+}
+
+/* สร้างเส้นตรงแนวตั้วด้วย ::before */
+.timeline::before {
+    content: '';
+    position: absolute; /* ลอยตัวเป็นอิสระ */
+    top: 0;
+    bottom: 0;
+    left: 200px; /* วางตำแหน่งเส้นให้อยู่ห่างจากซ้าย 200px */
+    width: 1.5px;
+    background-color: #333; /* สีของเส้น */
+}
+
+/* =====================================
+    5. การจัดวางข้อมูลแต่ละบรรทัด (Flexbox)
+===================================== */
+.timeline-item {
+    display: flex; /* ใช้ flexbox จัดเรียงวันที่ - จุด - ข้อความ ให้อยู่บรรทัดเดียวกัน */
+    align-items: center; /* ให้อยู่กึ่งกลางแนวตั้ง */
+    position: relative; /* เป็นจุดอ้างอิงของจุดวงกลม (Marker) ในบรรทัดนี้ */
+    margin-bottom: 35px; /* ระยะห่างแต่ละบรรทัด */
+    min-height: 24px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* ส่วนของวันที่ (ฝั่งซ้าย) */
+.timeline-date {
+    width: 160px; /* บังคับความกว้างตายตัวเพื่อดัน ข้อความไปชิดเส้น */
+    text-align: right;
+    color: #999;
+    padding-right: 20px; /* เว้นช่องว่างระหว่างวันที่กับเส้น */
+}
+
+/* Marker */
+.timeline-marker {
+    position: absolute; /* ลอยตัวอ้างอิงจาก  .timeline-item */
+    left: 200px; /* ต้องตรงกับตำแหน่ง left ของเส้นตรงใน .timeline::before */
+    transform: translateX(-50%); /* ดึงจุดกลับมาทางซ้ายครึ่งนึงของตัวมันเอง เพื่อให้ศูนย์กลางทับเส้นพอดี */
+    width: 14px;
+    height: 14px;
+    background-color: #222;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+}
+
+/* content */
+.timeline-content {
+    flex: 1;
+    padding-left: 70px;
+    color: #222;
+    font-size: 1.05rem;
+}
+
+/*==========
+    6.Footer 
+========== */
+.changelog-footer {
+    text-align: center;
+    margin-top: 50px
+}
+
+.btn-visit {
+    display: inline-block;
+    background-color: #222;
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-visit:hover {
+    background-color: #444;
+}
+
+/* ========================
+    7. Responsive Design
+========================= */
+@media (max-width: 600px) {
+    .changelog-container {
+        padding: 40px 20px;
+    }
+
+    /* เลื่อนเส้นไปชิดซ้ายสุดเมื่ออยู่บนมือถือ */
+    .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-item {
+        flex-direction: column; /* เปลี่ยนจากแนวนอนเป็นแนวตั้ง */
+        align-items: flex-start;
+        margin-bottom: 30px;
+    }
+
+    /* เลื่อนจุดไปชิดซ้ายทับเส้น */
+    .timeline-marker {
+        left: 10px;
+        top: 4px; /* ขยับจุดลงมาให้ตรงกับข้อความบรรทัดแรก */
+    }
+
+    /* จัดวันที่ให้อยู่ด้านบน */
+    .timeline-date {
+        width: 100%;
+        text-align: left;
+        padding-left: 35px;
+        padding-right: 0;
+        margin-bottom: 5px;
+        font-size: 0.85rem;
+    }
+
+    /* จัดเนื้อหาให้อยู่ใต้วันที่ */
+    .timeline-content {
+        padding-left: 35px;
+    }
+}
